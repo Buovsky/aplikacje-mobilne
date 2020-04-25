@@ -19,8 +19,9 @@ namespace AirMonitor.Views
 
         private void Help_Clicked(object sender, EventArgs e)
         {
-            DisplayAlert("Tytuł dialogu", "elo", "elo");
-            DisplayActionSheet("Tytul", "Anuluj", "destruction", "jeden", "dwa", "trzy");
+            DisplayAlert("Czym jest CAQI?", "CAQI (Wspólny Indeks Jakości Powietrza) jest liczbą w skali od 1 do 100, " +
+                "gdzie niska wartość oznacza dobrą jakość powietrza oraz wysoka wartość oznacza złą jakość powietrza.", "Zamknij");
+            //DisplayActionSheet("Tytul", "Anuluj", "destruction", "jeden", "dwa", "trzy");
         }
 
     }
