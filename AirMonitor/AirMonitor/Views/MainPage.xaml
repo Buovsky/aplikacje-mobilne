@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="AirMonitor.Views.MainPage"
+              xmlns:controls="clr-namespace:AirMonitor.Views.Controls">
+
+        <Grid>
+            
+
+            <StackLayout Padding="16"
+                BackgroundColor="AliceBlue">
+
+
+                <Frame BackgroundColor="LightGreen"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
+                       HeightRequest="64"
+                       WidthRequest="64"
+                       CornerRadius="50"
+                       BorderColor="Black"
+                       HasShadow="False"
+                       >
+
+                    <Label HorizontalOptions="Center" VerticalOptions="Center">
+
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="56" FontAttributes="Bold" TextColor="Black" FontSize="32"/>
+                                <Span Text="{x:Static x:Environment.NewLine}" />
+                                <Span Text="CAQI" FontAttributes="Italic" TextColor="Black" FontSize="16"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+
+                    </Label>
+
+                </Frame>
+
+                <Label Text="Świetna jakość!" 
+                       TextColor="Black" FontSize="Title" 
+                       HorizontalTextAlignment="Center" 
+                       FontAttributes="Bold"/>
+
+                <Label Text="Możesz bezpiecznie wyjść z domu bez swojej maski antysmogowej i nie bać się o swoje zdrowie." 
+                       TextColor="Black" 
+                       FontSize="14"
+                       HorizontalTextAlignment="Center" />
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="1" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <controls:ContentWidthHeader Grid.Column="0" 
+                                                     Title="PM2.5">
+                        <controls:ContentWidthHeader.ControlContent>
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="34" FontSize="24"/>
+                                        <Span Text="mg/m3" FontSize="12"/>
+                                        <Span Text="137%" FontSize="24"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </controls:ContentWidthHeader.ControlContent>
+                    </controls:ContentWidthHeader>
+
+
+
+                    <BoxView BackgroundColor="Gray" VerticalOptions="Fill" HeightRequest="1" HorizontalOptions="Fill" Grid.Column="1"/>
+
+
+                    <controls:ContentWidthHeader Title="PM10"
+                                                     Grid.Column="2" >
+                        <controls:ContentWidthHeader.ControlContent>
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="67" FontSize="24"/>
+                                        <Span Text="mg/m3" FontSize="12"/>
+                                        <Span Text="105%" FontSize="24"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </controls:ContentWidthHeader.ControlContent>
+                    </controls:ContentWidthHeader>
+                </Grid>
+                <BoxView BackgroundColor="Gray" VerticalOptions="Fill" HeightRequest="1" HorizontalOptions="Fill" Grid.Column="1"/>
+
+                <controls:ContentWidthHeader Title="Wilgotność">
+                    <Label Text="70%" FontSize="Body"/>
+                    <Slider Value="0.7" ThumbColor="Blue" 
+                                MinimumTrackColor="Orange" 
+                                MaximumTrackColor="Red" 
+                                IsEnabled="False"/>
+                </controls:ContentWidthHeader>
+
+                <BoxView BackgroundColor="Gray" VerticalOptions="Fill" HeightRequest="1" HorizontalOptions="Fill" Grid.Column="1"/>
+
+                <controls:ContentWidthHeader Title="Ciśnienie">
+                    <Label Text="1026hPa" FontSize="Body"/>
+                    <Slider Value="0.9" ThumbColor="Blue" 
+                                MinimumTrackColor="Orange" 
+                                MaximumTrackColor="Red" 
+                                IsEnabled="False"/>
+                </controls:ContentWidthHeader>
+            </StackLayout>
+            
+        <ImageButton Source="baseline_help_outline_black_24.png"
+                        WidthRequest="24"
+                        HeightRequest="24"
+                        BackgroundColor="AliceBlue"
+                        HorizontalOptions="End"
+                        VerticalOptions ="Start"
+                        Clicked ="Help_Clicked"
+                        Margin="10"
+                     />
+    </Grid>
+
+</ContentPage>
+
+ 
