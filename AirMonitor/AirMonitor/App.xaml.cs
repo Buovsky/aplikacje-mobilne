@@ -12,7 +12,10 @@ namespace AirMonitor
             InitializeComponent();
 
             //MainPage = new DetailsPage();
-            MainPage = new NavigationPage (new HomePage());
+            //MainPage = new NavigationPage (new HomePage());
+            MainPage = new NavigationPage (new TabbedPage1());
+
+            
         }
 
         protected override void OnStart()
