@@ -4,12 +4,11 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="AirMonitor.Views.MainPage"
+             x:Class="AirMonitor.Views.DetailsPage"
               xmlns:controls="clr-namespace:AirMonitor.Views.Controls">
 
         <Grid>
-            
-
+        
             <StackLayout Padding="16"
                 BackgroundColor="AliceBlue">
 
@@ -109,7 +108,8 @@
                                 MaximumTrackColor="Red" 
                                 IsEnabled="False"/>
                 </controls:ContentWidthHeader>
-            </StackLayout>
+            <Button x:Name="BackToHomePage" Text="Powrót do strony głównej" Clicked="BackToHomePage_Clicked"></Button>
+        </StackLayout>
             
         <ImageButton Source="baseline_help_outline_black_24.png"
                         WidthRequest="24"

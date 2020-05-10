@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace AirMonitor.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MainPage : ContentPage
+    public partial class DetailsPage : ContentPage
     {
-        public MainPage()
+        public DetailsPage()
         {
             InitializeComponent();
         }
@@ -22,6 +22,11 @@ namespace AirMonitor.Views
             DisplayAlert("Czym jest CAQI?", "CAQI (Wspólny Indeks Jakości Powietrza) jest liczbą w skali od 1 do 100, " +
                 "gdzie niska wartość oznacza dobrą jakość powietrza oraz wysoka wartość oznacza złą jakość powietrza.", "Zamknij");
             //DisplayActionSheet("Tytul", "Anuluj", "destruction", "jeden", "dwa", "trzy");
+        }
+
+        private void BackToHomePage_Clicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new HomePage());
         }
 
     }
