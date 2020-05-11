@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using AirMonitor.ViewModels;
+
 
 namespace AirMonitor.Views
 {
@@ -15,11 +17,8 @@ namespace AirMonitor.Views
         public HomePage()
         {
             InitializeComponent();
-        }
 
-        private void GoToDetailsPage_Clicked(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new DetailsPage());
+            BindingContext = new HomeViewModel(Navigation);
         }
     }
 }
