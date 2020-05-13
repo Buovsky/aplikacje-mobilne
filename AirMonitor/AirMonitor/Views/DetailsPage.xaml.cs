@@ -26,7 +26,7 @@ namespace AirMonitor.Views
 
         private void BackToHomePage_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new HomePage());
+            Navigation.PushAsync(new TabbedPage1());
         }
 
     }

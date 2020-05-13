@@ -5,9 +5,23 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="AirMonitor.Views.DetailsPage"
-              xmlns:controls="clr-namespace:AirMonitor.Views.Controls">
+             xmlns:viewModels="clr-namespace:AirMonitor.ViewModels"
+             xmlns:controls="clr-namespace:AirMonitor.Views.Controls"
+             xmlns:converters="clr-namespace:AirMonitor.Converters"
 
-        <Grid>
+             
+             >
+    <ContentPage.BindingContext>
+        <viewModels:DetailsViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ConvertValueToPercent x:Key="ConvertValueToPercent"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <Grid>
         
             <StackLayout Padding="16"
                 BackgroundColor="AliceBlue">
@@ -27,7 +41,7 @@
 
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="56" FontAttributes="Bold" TextColor="Black" FontSize="32"/>
+                                <Span Text="{Binding CaqiValue}" FontAttributes="Bold" TextColor="Black" FontSize="32"/>
                                 <Span Text="{x:Static x:Environment.NewLine}" />
                                 <Span Text="CAQI" FontAttributes="Italic" TextColor="Black" FontSize="16"/>
                             </FormattedString>
@@ -37,12 +51,12 @@
 
                 </Frame>
 
-                <Label Text="Świetna jakość!" 
+                <Label Text="{Binding CaqiTitle}" 
                        TextColor="Black" FontSize="Title" 
                        HorizontalTextAlignment="Center" 
                        FontAttributes="Bold"/>
 
-                <Label Text="Możesz bezpiecznie wyjść z domu bez swojej maski antysmogowej i nie bać się o swoje zdrowie." 
+                <Label Text="{Binding CaqiDescription}" 
                        TextColor="Black" 
                        FontSize="14"
                        HorizontalTextAlignment="Center" />
@@ -60,10 +74,10 @@
                             <Label>
                                 <Label.FormattedText>
                                     <FormattedString>
-                                        <Span Text="34" FontSize="24"/>
+                                        <Span Text="{Binding Pm25Value}" FontSize="24"/>
                                         <Span Text="mg/m3" FontSize="12"/>
-                                        <Span Text="137%" FontSize="24"/>
-                                    </FormattedString>
+                                        <Span Text="{Binding Pm25Percent, StringFormat='({0}%)'}" FontSize="24"/>
+                                </FormattedString>
                                 </Label.FormattedText>
                             </Label>
                         </controls:ContentWidthHeader.ControlContent>
@@ -80,9 +94,9 @@
                             <Label>
                                 <Label.FormattedText>
                                     <FormattedString>
-                                        <Span Text="67" FontSize="24"/>
+                                        <Span Text="{Binding Pm10Value}" FontSize="24"/>
                                         <Span Text="mg/m3" FontSize="12"/>
-                                        <Span Text="105%" FontSize="24"/>
+                                        <Span Text="{Binding Pm10Percent, StringFormat='({0}%)'}" FontSize="24"/>
                                     </FormattedString>
                                 </Label.FormattedText>
                             </Label>
@@ -92,8 +106,8 @@
                 <BoxView BackgroundColor="Gray" VerticalOptions="Fill" HeightRequest="1" HorizontalOptions="Fill" Grid.Column="1"/>
 
                 <controls:ContentWidthHeader Title="Wilgotność">
-                    <Label Text="70%" FontSize="Body"/>
-                    <Slider Value="0.7" ThumbColor="Blue" 
+                    <Label Text="{Binding HumidityValue, Converter={StaticResource ConvertValueToPercent}, StringFormat='{0}%'}" FontSize="Body"/>
+                    <Slider Value="{Binding HumidityValue}" ThumbColor="Blue" 
                                 MinimumTrackColor="Orange" 
                                 MaximumTrackColor="Red" 
                                 IsEnabled="False"/>
@@ -102,7 +116,7 @@
                 <BoxView BackgroundColor="Gray" VerticalOptions="Fill" HeightRequest="1" HorizontalOptions="Fill" Grid.Column="1"/>
 
                 <controls:ContentWidthHeader Title="Ciśnienie">
-                    <Label Text="1026hPa" FontSize="Body"/>
+                <Label Text="{Binding PressureValue, StringFormat='{0} hPa'}"/>
                     <Slider Value="0.9" ThumbColor="Blue" 
                                 MinimumTrackColor="Orange" 
                                 MaximumTrackColor="Red" 
