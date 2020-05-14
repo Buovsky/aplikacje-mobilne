@@ -3,10 +3,87 @@
  xmlns="http://xamarin.com/schemas/2014/forms"
  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <Style TargetType ="Label" x:Key="CaqiTitleStyle" >
+    <Style TargetType="Frame" x:Key="CaqiFrameStyle">
+        <Setter Property="BackgroundColor" Value="{StaticResource BackgroundCaqiColor}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="HeightRequest" Value="64" />
+        <Setter Property="WidthRequest" Value="64" />
+        <Setter Property="CornerRadius" Value="50" />
+        <Setter Property="BorderColor" Value="{StaticResource PrimaryTextColor}" />
+        <Setter Property="HasShadow" Value="False" />
+    </Style>
+
+    <Style TargetType ="StackLayout" x:Key="MainLayoutStyle">
+        <Setter Property="Padding" Value="16" />
+        <Setter Property="BackgroundColor" Value="{StaticResource MainBackgroundColor}" />
+    </Style>
+
+    <Style TargetType ="Label" x:Key="CenteredLabelStyle">
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+    </Style>
+
+    <Style TargetType ="Label" x:Key="CaqiValueStyle">
+        <Setter Property="FontAttributes" Value="Bold" />
         <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
-        <Setter Property="FontSize" Value="24" />
+        <Setter Property="FontSize" Value="32" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="CaqiStyle">
+        <Setter Property="FontAttributes" Value="Italic" />
+        <Setter Property="TextColor" Value="{StaticResource CaqiColor}" />
+        <Setter Property="FontSize" Value="16" />
+    </Style>
+
+    <Style TargetType ="Label" x:Key="CaqiTitleStyle">
+        <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
+        <Setter Property="FontSize" Value="Title" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
         <Setter Property="FontAttributes" Value="Bold" />
     </Style>
-    
+
+    <Style TargetType="Label" x:Key="CaqiDescryptionStyle">
+        <Setter Property="Padding" Value="3" />
+        <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="PmValueStyle">
+        <Setter Property="FontSize" Value="24" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="PmCubicMeterStyle">
+        <Setter Property="FontSize" Value="12" />
+    </Style>
+
+    <Style TargetType="BoxView" x:Key="SeparatorStyle">
+        <Setter Property="BackgroundColor" Value="{StaticResource SeparatorColor}" />
+        <Setter Property="VerticalOptions" Value="Fill" />
+        <Setter Property="HeightRequest" Value="1" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
+    </Style>
+
+    <Style TargetType="Label" x:Key="SliderValueStyle">
+        <Setter Property="FontSize" Value="Body" />
+    </Style>
+
+    <Style TargetType="Slider" x:Key="SliderStyle">
+        <Setter Property="ThumbColor" Value="{StaticResource SliderThumbColor}" />
+        <Setter Property="MinimumTrackColor" Value="{StaticResource SliderMinTrackColor}" />
+        <Setter Property="MaximumTrackColor" Value="{StaticResource SliderMaxTrackColor}" />
+        <Setter Property="IsEnabled" Value="False" />
+    </Style>
+
+    <Style TargetType="ImageButton" x:Key="HelpButtonStyle">
+        <Setter Property="WidthRequest" Value="24" />
+        <Setter Property="HeightRequest" Value="24" />
+        <Setter Property="BackgroundColor" Value="{StaticResource MainBackgroundColor}" />
+        <Setter Property="HorizontalOptions" Value="End" />
+        <Setter Property="VerticalOptions" Value="Start" />
+        <Setter Property="Margin" Value="10" />
+        <Setter Property="Scale" Value="1.2" />
+    </Style>
+
 </ResourceDictionary>
