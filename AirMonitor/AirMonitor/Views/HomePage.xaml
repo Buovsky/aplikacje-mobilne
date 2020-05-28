@@ -10,7 +10,7 @@
             <Label Text="Home Page" FontSize="50" TextColor="BlueViolet" x:Name="Label1"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
-            <!--<Button x:Name="GoToDetailsPage" Text="Sprawdź stan powietrza" Clicked="GoToDetailsPage_Clicked"></Button>-->
+            <Button x:Name="Localization" Text="Sprawdź lokalizację" Clicked="Localization_Clicked"></Button>
             <Button Text="Sprawdź stan powietrza" Command="{Binding MoveToDetailsCommand}"></Button>
         </StackLayout>
     </ContentPage.Content>

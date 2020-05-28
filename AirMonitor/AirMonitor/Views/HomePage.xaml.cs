@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using AirMonitor.ViewModels;
+using Xamarin.Essentials;
 
 
 namespace AirMonitor.Views
@@ -19,6 +20,27 @@ namespace AirMonitor.Views
             InitializeComponent();
 
             BindingContext = new HomeViewModel(Navigation);
+
+
+        }
+
+        private async void Localization_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                var request = new GeolocationRequest(GeolocationAccuracy.High);
+                var location = await Geolocation.GetLastKnownLocationAsync();
+
+
+                await DisplayAlert("Lokalizacja graficzna", $"Szerokość graficzna: {location.Latitude}\nDługość graficzna: {location.Longitude}\nWysokość graiczna: {location.Altitude}", "Zamknij");
+
+
+            }
+            catch
+            {
+                // Unable to get location
+            }
+
         }
     }
 }
