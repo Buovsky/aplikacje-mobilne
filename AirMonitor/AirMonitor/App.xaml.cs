@@ -2,11 +2,14 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using AirMonitor.Views;
+using System.Runtime.Serialization;
 
 namespace AirMonitor
 {
     public partial class App : Application
     {
+        public static SerializationInfo AirlyApiUrl { get; internal set; }
+
         public App()
         {
             InitializeComponent();
