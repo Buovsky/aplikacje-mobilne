@@ -16,7 +16,7 @@ using AirMonitor.Models;
 
 namespace AirMonitor.ViewModels
 {
-    public class HomeViewModel
+    public class HomeViewModel : BaseViewModel
     {
         private readonly INavigation _navigation;
 
@@ -38,7 +38,24 @@ namespace AirMonitor.ViewModels
         {
             var location = await GetLocation();
             var installations = await GetInstallations(location, maxResults: 3);
-           // var data = await GetMeasurementsForInstallations(installations);
+            var data = await GetMeasurementsForInstallations(installations);
+            Items = new List<Measurement>(data);
+
+            IsBusy = false;
+        }
+
+        private List<Measurement> _items;
+        public List<Measurement> Items
+        {
+            get => _items;
+            set => SetProperty(ref _items, value);
+        }
+
+        private bool _isBusy;
+        public bool IsBusy
+        {
+            get => _isBusy;
+            set => SetProperty(ref _isBusy, value);
         }
 
         private async Task<IEnumerable<Installation>> GetInstallations(Location location, double maxDistanceInKm = 2, int maxResults = 1)
@@ -71,7 +88,7 @@ namespace AirMonitor.ViewModels
 
             var measurements = new List<Measurement>();
 
-            /*foreach (var installation in installations)
+            foreach (var installation in installations)
             {
                 var query = GetQuery(new Dictionary<string, object>
                 {
@@ -87,7 +104,7 @@ namespace AirMonitor.ViewModels
                     response.CurrentDisplayValue = (int)Math.Round(response.Current?.Indexes?.FirstOrDefault()?.Value ?? 0);
                     measurements.Add(response);
                 }
-            }*/
+            }
 
             return measurements;
         }

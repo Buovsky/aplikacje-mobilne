@@ -3,19 +3,27 @@ using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using AirMonitor.Views;
+using AirMonitor.Models;
 
 namespace AirMonitor.ViewModels
 {
-    public class DetailsViewModel : INotifyPropertyChanged
+    public class DetailsViewModel : BaseViewModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
 
-         public DetailsViewModel()
+        public DetailsViewModel()
         {
 
         }
-        
+
+        private Measurement _item;
+        public Measurement Item
+        {
+            get => _item;
+            set
+            {
+                SetProperty(ref _item, value);
+            }
+        }
 
         private int _caqiValue = 56;
         public int CaqiValue
@@ -80,23 +88,5 @@ namespace AirMonitor.ViewModels
             set => SetProperty(ref _pressureValue, value);
         }
 
-        private void RaisePropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private bool SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
-        {
-            if (EqualityComparer<T>.Default.Equals(field, value)) return false;
-
-            field = value;
-
-            RaisePropertyChanged(propertyName);
-
-            return true;
-        }
-
     }
-
-
 }
