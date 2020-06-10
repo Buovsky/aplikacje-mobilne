@@ -6,15 +6,20 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using AirMonitor.Models;
+using AirMonitor.ViewModels;
 
 namespace AirMonitor.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class DetailsPage : ContentPage
     {
-        public DetailsPage()
+        public DetailsPage(Measurement item)
         {
             InitializeComponent();
+
+            var viewModel = BindingContext as DetailsViewModel;
+            viewModel.Item = item;
         }
 
         private void Help_Clicked(object sender, EventArgs e)
@@ -23,11 +28,5 @@ namespace AirMonitor.Views
                 "gdzie niska wartość oznacza dobrą jakość powietrza oraz wysoka wartość oznacza złą jakość powietrza.", "Zamknij");
             //DisplayActionSheet("Tytul", "Anuluj", "destruction", "jeden", "dwa", "trzy");
         }
-
-        private void BackToHomePage_Clicked(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new TabbedPage1());
-        }
-
     }
 }

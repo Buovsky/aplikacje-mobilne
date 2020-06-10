@@ -16,7 +16,7 @@
     
     <ContentPage.Resources>
         <ResourceDictionary>
-            <converters:ConvertValueToPercent x:Key="ConvertValueToPercent"/>
+            <converters:ConvertPercentToValue x:Key="ConvertPercentToValue"/>
         </ResourceDictionary>
     </ContentPage.Resources>
     
@@ -85,9 +85,10 @@
             <BoxView Grid.Column="1" Style="{StaticResource SeparatorStyle}"/>
 
                 <controls:ContentWidthHeader Title="Wilgotność">
-                    <Label Text="{Binding HumidityValue, Converter={StaticResource ConvertValueToPercent}, StringFormat='{0}%'}" 
+                    <Label Text="{Binding HumidityPercent, StringFormat='{0}%'}" 
                            Style="{StaticResource SliderValueStyle}" />
-                    <Slider Value="{Binding HumidityValue}" Style="{StaticResource SliderStyle}"/>
+                    <Slider Value="{Binding HumidityPercent, Converter={StaticResource ConvertPercentToValue}, Mode=OneWay}" 
+                            Style="{StaticResource SliderStyle}"/>
                 </controls:ContentWidthHeader>
 
                 <BoxView BackgroundColor="Gray" VerticalOptions="Fill" HeightRequest="1" HorizontalOptions="Fill" Grid.Column="1"/>
@@ -97,7 +98,6 @@
                        Style="{StaticResource SliderValueStyle}"/>
                     <Slider Value="0.9" Style="{StaticResource SliderStyle}"/>
                 </controls:ContentWidthHeader>
-            <Button x:Name="BackToHomePage" Text="Powrót do strony głównej" Clicked="BackToHomePage_Clicked"></Button>
         </StackLayout>
             
         <ImageButton Source="baseline_help_outline_black_24.png" Clicked ="Help_Clicked"

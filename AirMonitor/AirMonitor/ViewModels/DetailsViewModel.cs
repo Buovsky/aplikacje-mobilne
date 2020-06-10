@@ -4,6 +4,7 @@ using System.Text;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using AirMonitor.Models;
+using System.Linq;
 
 namespace AirMonitor.ViewModels
 {
@@ -22,8 +23,31 @@ namespace AirMonitor.ViewModels
             set
             {
                 SetProperty(ref _item, value);
+
+                UpdateProperties();
             }
+
         }
+
+        private void UpdateProperties()
+        {
+            if (Item?.Current == null) return;
+            var current = Item?.Current;
+            var index = current.Indexes?.FirstOrDefault(c => c.Name == "AIRLY_CAQI");
+            var values = current.Values;
+            var standards = current.Standards;
+
+            CaqiValue = (int)Math.Round(index?.Value ?? 0);
+            CaqiTitle = index.Description;
+            CaqiDescription = index.Advice;
+            Pm25Value = (int)Math.Round(values?.FirstOrDefault(s => s.Name == "PM25")?.Value ?? 0);
+            Pm10Value = (int)Math.Round(values?.FirstOrDefault(s => s.Name == "PM10")?.Value ?? 0);
+            HumidityPercent = (int)Math.Round(values?.FirstOrDefault(s => s.Name == "HUMIDITY")?.Value ?? 0);
+            PressureValue = (int)Math.Round(values?.FirstOrDefault(s => s.Name == "PRESSURE")?.Value ?? 0);
+            Pm25Percent = (int)Math.Round(standards?.FirstOrDefault(s => s.Pollutant == "PM25")?.Percent ?? 0);
+            Pm10Percent = (int)Math.Round(standards?.FirstOrDefault(s => s.Pollutant == "PM10")?.Percent ?? 0);
+        }
+
 
         private int _caqiValue = 56;
         public int CaqiValue
@@ -74,11 +98,11 @@ namespace AirMonitor.ViewModels
             set => SetProperty(ref _pm10Percent, value);
         }
 
-        private double _humidityValue = 0.7;
-        public double HumidityValue
+        private int _humidityPercent = 70;
+        public int HumidityPercent
         {
-            get => _humidityValue;
-            set => SetProperty(ref _humidityValue, value);
+            get => _humidityPercent;
+            set => SetProperty(ref _humidityPercent, value);
         }
 
         private int _pressureValue = 1026;

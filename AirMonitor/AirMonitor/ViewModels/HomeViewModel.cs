@@ -27,11 +27,11 @@ namespace AirMonitor.ViewModels
         }
 
         private ICommand _moveToDetailsCommand;
-        public ICommand MoveToDetailsCommand => _moveToDetailsCommand ?? (_moveToDetailsCommand = new Command(GoToDetailsPage_Clicked));
+        public ICommand MoveToDetailsCommand => _moveToDetailsCommand ?? (_moveToDetailsCommand = new Command<Measurement>(GoToDetailsPage_Clicked));
 
-        private void GoToDetailsPage_Clicked()
+        private void GoToDetailsPage_Clicked(Measurement item)
         {
-            _navigation.PushAsync(new DetailsPage());
+            _navigation.PushAsync(new DetailsPage(item));
         }
 
         private async Task Initialize()
