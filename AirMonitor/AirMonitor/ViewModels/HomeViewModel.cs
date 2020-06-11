@@ -73,7 +73,7 @@ namespace AirMonitor.ViewModels
                 { "maxDistanceKM", maxDistanceInKm },
                 { "maxResults", maxResults }
             });
-            var url = GetApiUrl("installations/nearest", query);
+            var url = GetApiUrl(App.ApiInstallationUrl, query);
 
             var response = await GetHttpResponseAsync<IEnumerable<Installation>>(url);
             return response;
@@ -94,7 +94,7 @@ namespace AirMonitor.ViewModels
                 {
                     { "installationId", installation.Id }
                 });
-                var url = GetApiUrl("measurements/installation", query);
+                var url = GetApiUrl(App.ApiMeasurementUrl, query);
 
                 var response = await GetHttpResponseAsync<Measurement>(url);
 
@@ -133,17 +133,17 @@ namespace AirMonitor.ViewModels
         private static HttpClient GetHttpClient()
         {
             var client = new HttpClient();
-            client.BaseAddress = new Uri("https://airapi.airly.eu/v2/");
+            client.BaseAddress = new Uri(App.ApiUrl);
 
             client.DefaultRequestHeaders.Add("Accept", "application/json");
             client.DefaultRequestHeaders.Add("Accept-Encoding", "gzip");
-            client.DefaultRequestHeaders.Add("apikey", "0Uv0eyZK9L8AvDqYYuZlsTpo8w8z2f7K");
+            client.DefaultRequestHeaders.Add("apikey", App.ApiKey);
             return client;
         }
 
         private string GetApiUrl(string path, string query)
         {
-            var builder = new UriBuilder("https://airapi.airly.eu/v2/");
+            var builder = new UriBuilder(App.ApiUrl);
             builder.Port = -1;
             builder.Path += path;
             builder.Query = query;
