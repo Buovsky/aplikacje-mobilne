@@ -7,22 +7,24 @@
              mc:Ignorable="d"
              x:Class="AirMonitor.Views.HomePage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Home Page" FontSize="50" TextColor="BlueViolet" x:Name="Label1"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <Grid>
+            <StackLayout>
+                <Label Text="Home Page" FontSize="50" TextColor="BlueViolet" x:Name="Label1"
+            VerticalOptions="CenterAndExpand" 
+            HorizontalOptions="CenterAndExpand" />
 
-            <ListView ItemsSource="{Binding Items}" ItemTapped="ListView_ItemTapped" SelectionMode="None">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextCell Text="{Binding Installation.Address.Description}"
-                              Detail="{Binding CurrentDisplayValue, StringFormat='CAQI: {0}'}"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                <ListView ItemsSource="{Binding Items}" ItemTapped="ListView_ItemTapped" SelectionMode="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell Text="{Binding Installation.Address.Description}"
+                            Detail="{Binding CurrentDisplayValue, StringFormat='CAQI: {0}'}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
 
-            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="Center" VerticalOptions="Center"/>
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
 
-        </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

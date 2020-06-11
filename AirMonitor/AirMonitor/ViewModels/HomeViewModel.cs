@@ -36,6 +36,8 @@ namespace AirMonitor.ViewModels
 
         private async Task Initialize()
         {
+            IsBusy = true;
+
             var location = await GetLocation();
             var installations = await GetInstallations(location, maxResults: 3);
             var data = await GetMeasurementsForInstallations(installations);
