@@ -2,6 +2,10 @@
 {
     public class Measurement
     {
+        public Measurement()
+        {
+        }
+
         public int CurrentDisplayValue { get; set; }
         public MeasurementItem Current { get; set; }
         public MeasurementItem[] History { get; set; }
