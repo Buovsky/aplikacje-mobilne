@@ -5,7 +5,7 @@ using SQLite;
 
 namespace AirMonitor.Models.TableClasses
 {
-    class InstallationEntity
+    public class InstallationEntity
     {
         public InstallationEntity()
         {
