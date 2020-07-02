@@ -77,6 +77,8 @@ namespace AirMonitor
 
         protected override void OnSleep()
         {
+            DbHelper?.Dispose();
+            DbHelper = null;
         }
 
         protected override void OnResume()

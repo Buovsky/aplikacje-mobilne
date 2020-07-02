@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace AirMonitor.Helper
 {
-    public partial class DatabaseHelper
+    public partial class DatabaseHelper : IDisposable
     {
         private SQLiteConnection _connect;
         public void Initialize()
@@ -53,6 +53,16 @@ namespace AirMonitor.Helper
                 }
             });
         }
+        public void SaveInstallations(IEnumerable<Installation> installations)
+        {
+            var entries = installations.Select(s => new InstallationEntity(s));
+
+            _connect?.RunInTransaction(() =>
+            {
+                _connect?.DeleteAll<InstallationEntity>();
+                _connect?.InsertAll(entries);
+            });
+        }
 
         public IEnumerable<Installation> GetInstallations()
         {
@@ -85,6 +95,27 @@ namespace AirMonitor.Helper
             var indexes = _connect?.Table<AirQualityIndex>().Where(s => indexIds.Contains(s.Id)).ToArray();
             var standards = _connect?.Table<AirQualityStandard>().Where(s => standardIds.Contains(s.Id)).ToArray();
             return new MeasurementItem(entity, values, indexes, standards);
+        }
+
+        private bool disposedValue = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    _connect?.Dispose();
+                    _connect = null;
+                }
+
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
         }
     }
 }
