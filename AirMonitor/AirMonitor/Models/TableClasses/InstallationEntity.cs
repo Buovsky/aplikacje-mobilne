@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json;
 using SQLite;
 
 namespace AirMonitor.Models.TableClasses
@@ -11,6 +12,18 @@ namespace AirMonitor.Models.TableClasses
         {
         }
 
+        public InstallationEntity(Installation installation)
+        {
+            if (installation == null) return;
+
+            Id = installation.Id;
+            LocationString = JsonConvert.SerializeObject(installation.Location);
+            AddressString = JsonConvert.SerializeObject(installation.Address);
+            Elevation = installation.Elevation;
+            IsAirlyInstallation = installation.IsAirlyInstallation;
+        }
+
+        [PrimaryKey]
         public string Id { get; set; }
         public string LocationString { get; set; }
         public string AddressString { get; set; }

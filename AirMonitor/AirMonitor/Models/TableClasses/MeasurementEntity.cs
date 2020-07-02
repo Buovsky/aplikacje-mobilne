@@ -5,7 +5,7 @@ using SQLite;
 
 namespace AirMonitor.Models.TableClasses
 {
-    class MeasurementEntity
+    public class MeasurementEntity
     {
         public MeasurementEntity()
         {
@@ -17,6 +17,7 @@ namespace AirMonitor.Models.TableClasses
             InstallationId = installationId;
         }
 
+        [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
         public int CurrentMeasurementId { get; set; }
         public int CurrentMeasurementItemId { get; }

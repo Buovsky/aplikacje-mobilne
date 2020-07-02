@@ -5,6 +5,8 @@ using System.Text;
 using SQLite;
 using AirMonitor.Models;
 using AirMonitor.Models.TableClasses;
+using System.Linq;
+using Newtonsoft.Json;
 
 namespace AirMonitor.Helper
 {
@@ -50,6 +52,39 @@ namespace AirMonitor.Helper
                     _connect?.Insert(measurementEntity);
                 }
             });
+        }
+
+        public IEnumerable<Installation> GetInstallations()
+        {
+            return _connect?.Table<InstallationEntity>().Select(s => new Installation(s)).ToList();
+        }
+
+        private Installation GetInstallation(string id)
+        {
+            var entity = _connect?.Get<InstallationEntity>(id);
+            return new Installation(entity);
+        }
+
+        public IEnumerable<Measurement> GetMeasurements()
+        {
+            return _connect?.Table<MeasurementEntity>().Select(s =>
+            {
+                var measurementItem = GetMeasurementItem(s.CurrentMeasurementItemId);
+                var installation = GetInstallation(s.InstallationId);
+                return new Measurement(measurementItem, installation);
+            }).ToList();
+        }
+
+        private MeasurementItem GetMeasurementItem(int id)
+        {
+            var entity = _connect?.Get<MeasurementItemEntity>(id);
+            var valueIds = JsonConvert.DeserializeObject<int[]>(entity.MeasurementValueIds);
+            var indexIds = JsonConvert.DeserializeObject<int[]>(entity.AirQualityIndexIds);
+            var standardIds = JsonConvert.DeserializeObject<int[]>(entity.AirQualityStandardIds);
+            var values = _connect?.Table<MeasurementValue>().Where(s => valueIds.Contains(s.Id)).ToArray();
+            var indexes = _connect?.Table<AirQualityIndex>().Where(s => indexIds.Contains(s.Id)).ToArray();
+            var standards = _connect?.Table<AirQualityStandard>().Where(s => standardIds.Contains(s.Id)).ToArray();
+            return new MeasurementItem(entity, values, indexes, standards);
         }
     }
 }
