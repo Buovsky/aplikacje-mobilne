@@ -36,6 +36,7 @@ namespace AirMonitor
         private async Task InitializeApp()
         {
             await LoadConfig();
+            InitializeDatabase();
 
             MainPage = new NavigationPage(new TabbedPage1());
         }
@@ -71,6 +72,7 @@ namespace AirMonitor
 
         protected override void OnStart()
         {
+            InitializeDatabase();
         }
 
         protected override void OnSleep()
@@ -79,6 +81,7 @@ namespace AirMonitor
 
         protected override void OnResume()
         {
+            InitializeDatabase();
         }
     }
 }

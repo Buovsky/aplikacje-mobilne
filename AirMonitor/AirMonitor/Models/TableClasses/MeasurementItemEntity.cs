@@ -8,8 +8,12 @@ namespace AirMonitor.Models.TableClasses
 {
     class MeasurementItemEntity
     {
-        public MeasurementItemEntity()
+        public MeasurementItemEntity(MeasurementItem measurementItem)
         {
+            if (measurementItem == null) return;
+
+            FromDateTime = measurementItem.FromDateTime;
+            TillDateTime = measurementItem.TillDateTime;
         }
 
         public int Id { get; set; }

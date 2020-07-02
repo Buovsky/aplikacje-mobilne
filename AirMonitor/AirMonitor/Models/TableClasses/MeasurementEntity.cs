@@ -11,8 +11,15 @@ namespace AirMonitor.Models.TableClasses
         {
         }
 
+        public MeasurementEntity(int currentMeasurementItemId, string installationId)
+        {
+            CurrentMeasurementItemId = currentMeasurementItemId;
+            InstallationId = installationId;
+        }
+
         public int Id { get; set; }
         public int CurrentMeasurementId { get; set; }
+        public int CurrentMeasurementItemId { get; }
         public string InstallationId { get; set; }
 
     }
