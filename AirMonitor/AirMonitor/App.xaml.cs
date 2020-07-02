@@ -8,6 +8,8 @@ using System.IO;
 using Newtonsoft.Json.Linq;
 using System.Reflection;
 using System.Linq;
+using AirMonitor.Helper;
+
 
 
 namespace AirMonitor
@@ -18,6 +20,8 @@ namespace AirMonitor
         public static string ApiUrl { get; private set; }
         public static string ApiMeasurementUrl { get; private set; }
         public static string ApiInstallationUrl { get; private set; }
+        public static DatabaseHelper DbHelper { get; private set; }
+
 
         public App()
         {
@@ -34,6 +38,15 @@ namespace AirMonitor
             await LoadConfig();
 
             MainPage = new NavigationPage(new TabbedPage1());
+        }
+
+        private void InitializeDatabase()
+        {
+            if (DbHelper == null)
+            {
+                DbHelper = new DatabaseHelper();
+                DbHelper.Initialize();
+            }
         }
         private static async Task LoadConfig()
         {
