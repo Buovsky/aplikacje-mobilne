@@ -14,6 +14,7 @@ using System.Net;
 using Newtonsoft.Json;
 using AirMonitor.Models;
 using Android.OS;
+using Xamarin.Forms.Maps;
 
 namespace AirMonitor.ViewModels
 {
@@ -26,6 +27,14 @@ namespace AirMonitor.ViewModels
             _navigation = navigation;
             Initialize(true);
         }
+        private List<MapLocation> _locations;
+
+        public List<MapLocation> Locations
+        {
+            get => _locations;
+            set => SetProperty(ref _locations, value);
+        }
+
 
         private ICommand _moveToDetailsCommand;
         public ICommand MoveToDetailsCommand => _moveToDetailsCommand ?? (_moveToDetailsCommand = new Command<Measurement>(GoToDetailsPage_Clicked));
@@ -52,6 +61,14 @@ namespace AirMonitor.ViewModels
             IsBusy = true;
 
             await LoadData(forceRefresh);
+
+            Locations = Items.Select(i => new MapLocation
+            {
+                Address = i.Installation.Address.Description,
+                Description = "CAQI: " + i.CurrentDisplayValue,
+                Position = new Position(i.Installation.Location.Latitude, i.Installation.Location.Longitude)
+            }).ToList();
+
 
             IsBusy = false;
         }
