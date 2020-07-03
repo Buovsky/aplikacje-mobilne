@@ -85,6 +85,7 @@ namespace AirMonitor.ViewModels
             get => _isRefreshing;
             set => SetProperty(ref _isRefreshing, value);
         }
+        public object InfoWindowClickedCommand { get; internal set; }
 
         private async Task<IEnumerable<Installation>> GetInstallations(Location location, bool forceRefresh, double maxDistanceInKm = 2, int maxResults = 3)
         {

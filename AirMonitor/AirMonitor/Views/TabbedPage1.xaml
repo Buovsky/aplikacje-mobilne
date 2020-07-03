@@ -15,7 +15,8 @@
 
     <TabbedPage.Children>
         <me:HomePage Title ="Home Page" IconImageSource="baseline_home_white_24.png" />
-        <me:SettingsPage Title ="Settings Page" IconImageSource="baseline_settings_white_24.png"/>
+        <me:SettingsPage Title ="Settings" IconImageSource="baseline_settings_white_24.png"/>
+        <me:MapPage Title ="Map" IconImageSource="baseline_settings_white_24.png"/>
     </TabbedPage.Children>
 
     <!--<NavigationPage Title="Home Page">
