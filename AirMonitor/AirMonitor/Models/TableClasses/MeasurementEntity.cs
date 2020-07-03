@@ -19,7 +19,7 @@ namespace AirMonitor.Models.TableClasses
 
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        public int CurrentMeasurementId { get; set; }
+        //public int CurrentMeasurementId { get; set; }
         public int CurrentMeasurementItemId { get; }
         public string InstallationId { get; set; }
 

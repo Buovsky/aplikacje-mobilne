@@ -13,6 +13,7 @@ using System.Linq;
 using System.Net;
 using Newtonsoft.Json;
 using AirMonitor.Models;
+using Android.OS;
 
 namespace AirMonitor.ViewModels
 {
@@ -23,11 +24,23 @@ namespace AirMonitor.ViewModels
         public HomeViewModel(INavigation navigation)
         {
             _navigation = navigation;
-            Initialize(false);
+            Initialize(true);
         }
 
         private ICommand _moveToDetailsCommand;
         public ICommand MoveToDetailsCommand => _moveToDetailsCommand ?? (_moveToDetailsCommand = new Command<Measurement>(GoToDetailsPage_Clicked));
+
+        private ICommand _refreshCommand;
+        public ICommand RefreshCommand => _refreshCommand ?? (_refreshCommand = new Command(async () => await OnRefreshCommand()));
+
+        private async Task OnRefreshCommand()
+        {
+            IsRefreshing = true;
+            
+            await LoadData(true);
+            Console.WriteLine("Przeszlo");
+            IsRefreshing = false;
+        }
 
         private void GoToDetailsPage_Clicked(Measurement item)
         {
@@ -46,11 +59,8 @@ namespace AirMonitor.ViewModels
         private async Task LoadData(bool forceRefresh)
         {
             var location = await GetLocation();
-            var data = await Task.Run(async () =>
-            {
-                var installations = await GetInstallations(location, forceRefresh, maxResults: 3);
-                return await GetMeasurementsForInstallations(installations, forceRefresh);
-            });
+            var installations = await GetInstallations(location, forceRefresh, maxResults: 3);
+            var data = await GetMeasurementsForInstallations(installations, forceRefresh);
 
             Items = new List<Measurement>(data);
         }
@@ -69,7 +79,14 @@ namespace AirMonitor.ViewModels
             set => SetProperty(ref _isBusy, value);
         }
 
-        private async Task<IEnumerable<Installation>> GetInstallations(Location location, bool forceRefresh, double maxDistanceInKm = 2, int maxResults = 1)
+        private bool _isRefreshing;
+        public bool IsRefreshing
+        {
+            get => _isRefreshing;
+            set => SetProperty(ref _isRefreshing, value);
+        }
+
+        private async Task<IEnumerable<Installation>> GetInstallations(Location location, bool forceRefresh, double maxDistanceInKm = 2, int maxResults = 3)
         {
             if (location == null)
             {
@@ -78,9 +95,9 @@ namespace AirMonitor.ViewModels
             }
 
             IEnumerable<Installation> result;
+            Console.WriteLine("CONDITION_INSTALLATIONS");
 
             var savedMeasurements = App.DbHelper.GetMeasurements();
-
             if (forceRefresh || ShouldUpdateData(savedMeasurements))
             {
 
@@ -114,14 +131,18 @@ namespace AirMonitor.ViewModels
 
             var measurements = new List<Measurement>();
             var savedMeasurements = App.DbHelper.GetMeasurements();
+            
 
             if (forceRefresh || ShouldUpdateData(savedMeasurements))
             {
+                Console.WriteLine("MEASUREMENTS!");
+
                 foreach (var installation in installations)
                 {
                     var query = GetQuery(new Dictionary<string, object>
                     {
                         { "installationId", installation.Id }
+
                     });
                     var url = GetApiUrl(App.ApiMeasurementUrl, query);
 
@@ -130,7 +151,7 @@ namespace AirMonitor.ViewModels
                     if (response != null)
                     {
                         response.Installation = installation;
-                        response.CurrentDisplayValue = (int)Math.Round(response.Current?.Indexes?.FirstOrDefault()?.Value ?? 0);
+                        //response.CurrentDisplayValue = (int)Math.Round(response.Current?.Indexes?.FirstOrDefault()?.Value ?? 0);
                         measurements.Add(response);
                     }
                 }
@@ -139,11 +160,15 @@ namespace AirMonitor.ViewModels
             }
             else
             {
+                Console.WriteLine("MEASUREMENTS_ELSE1");
+
                 measurements = savedMeasurements.ToList();
             }
 
             foreach (var measurement in measurements)
             {
+
+
                 measurement.CurrentDisplayValue = (int)Math.Round(measurement.Current?.Indexes?.FirstOrDefault()?.Value ?? 0);
             }
 
@@ -153,7 +178,7 @@ namespace AirMonitor.ViewModels
 
         private bool ShouldUpdateData(IEnumerable<Measurement> savedMeasurements)
         {
-            var isAnyMeasurementOld = savedMeasurements.Any(s => s.Current.TillDateTime.AddMinutes(60) < DateTime.UtcNow);
+            var isAnyMeasurementOld = savedMeasurements.Any(s => s.Current.TillDateTime.AddMinutes(1) < DateTime.UtcNow);
 
             return savedMeasurements.Count() == 0 || isAnyMeasurementOld;
         }

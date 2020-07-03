@@ -10,11 +10,14 @@ namespace AirMonitor.Models
 
         public MeasurementItem(MeasurementItemEntity entity, MeasurementValue[] values, AirQualityIndex[] indexes, AirQualityStandard[] standards)
         {
+            Console.WriteLine("MeasurementItem");
+
             FromDateTime = entity.FromDateTime;
             TillDateTime = entity.TillDateTime;
             Values = values;
             Indexes = indexes;
             Standards = standards;
+
         }
 
         public DateTime FromDateTime { get; set; }

@@ -15,9 +15,10 @@ namespace AirMonitor.Helper
         private SQLiteConnection _connect;
         public void Initialize()
         {
-            var databasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "dataBase.db");
+            var databasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "data.db");
 
             _connect = new SQLiteConnection(databasePath, SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.Create | SQLiteOpenFlags.FullMutex);
+            Console.WriteLine("Connected with DB!");
 
 
             _connect.CreateTable<InstallationEntity>();
@@ -77,12 +78,24 @@ namespace AirMonitor.Helper
 
         public IEnumerable<Measurement> GetMeasurements()
         {
-            return _connect?.Table<MeasurementEntity>().Select(s =>
+
+            try
             {
-                var measurementItem = GetMeasurementItem(s.CurrentMeasurementItemId);
-                var installation = GetInstallation(s.InstallationId);
-                return new Measurement(measurementItem, installation);
-            }).ToList();
+                var data = _connect?.Table<MeasurementEntity>().Select(s =>
+                {
+
+                    var measurementItem = GetMeasurementItem(s.CurrentMeasurementItemId);
+                    var installation = GetInstallation(s.InstallationId);
+
+
+                    return new Measurement(measurementItem, installation);
+                }).ToList();
+
+                return data;
+            } catch (Exception e)
+            {
+                return null;
+            }
         }
 
         private MeasurementItem GetMeasurementItem(int id)
@@ -94,9 +107,11 @@ namespace AirMonitor.Helper
             var values = _connect?.Table<MeasurementValue>().Where(s => valueIds.Contains(s.Id)).ToArray();
             var indexes = _connect?.Table<AirQualityIndex>().Where(s => indexIds.Contains(s.Id)).ToArray();
             var standards = _connect?.Table<AirQualityStandard>().Where(s => standardIds.Contains(s.Id)).ToArray();
+            Console.WriteLine("GetMeasurementItem");
             return new MeasurementItem(entity, values, indexes, standards);
         }
 
+        #region IDisposable Support
         private bool disposedValue = false;
 
         protected virtual void Dispose(bool disposing)
@@ -117,5 +132,6 @@ namespace AirMonitor.Helper
         {
             Dispose(true);
         }
+        #endregion
     }
 }

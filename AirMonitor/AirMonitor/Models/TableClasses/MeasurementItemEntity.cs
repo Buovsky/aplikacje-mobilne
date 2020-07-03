@@ -16,6 +16,7 @@ namespace AirMonitor.Models.TableClasses
 
         public MeasurementItemEntity(MeasurementItem measurementItem)
         {
+            Console.WriteLine("MeasurementItemEntity");
             if (measurementItem == null) return;
 
             FromDateTime = measurementItem.FromDateTime;
